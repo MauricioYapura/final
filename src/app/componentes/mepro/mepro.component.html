@@ -1,0 +1,117 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-12 mx-auto">
+                    <!-- form card login -->
+                    <div class="card rounded-2">
+                        <div class="card-header">
+                            <h3 class="mb-1">Asignacion Procesos a Menú:</h3>
+                        </div>
+                        <div class="card-body-ml">
+
+                            <div class="container-xl">
+                                <br>
+                                <div class="container " style="height:220px">
+                                    <div class="row">
+                                        <div class="col-sm-5 col-md-6 border-secondary border ">
+                                            <h4 class="text-center mt-3">Lista de Menús</h4>
+                                            <div class="textcenter col-sm-5">
+                                                Buscar:: <input class="form-control" type="text" name="search"
+                                                    [(ngModel)]="searchText" autocomplete="off" placeholder="BUSCAR">
+                                            </div>
+                                            <br>
+                                            
+                                                <table class="table" style="width: 350px; ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">LISTA DE MENUS</th>
+    
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngFor="let menu of menus | filter:searchText | paginate: { itemsPerPage: 3, currentPage: page }">
+                                                        <tr>
+                                                            <td scope="row">
+                                                                <input type="radio"  name="list_name"  (change)="onItemChange(menu.codm)"  value="{{menu.codm}}"/>
+                                                                </td>
+                                                            <td colspan="2">{{menu.nombre}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <pagination-controls (pageChange)="handlePageChange($event)"></pagination-controls>
+                                            
+                                           
+                                        </div>
+                                        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0 border-secondary border ">
+                                            <h4 class="text-center mt-3">LISTA DE PROCESOS</h4>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    Buscar:: <input class="form-control" type="text" name="search1"
+                                                        [(ngModel)]="searchText1" autocomplete="off"
+                                                        placeholder="BUSCAR">
+                                                </div>
+                                                <form novalidate [formGroup]="myForm" (change)="onSubmitAsignado()">
+                                                    <div class="col-2">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" formControlName="gender" id="todos"
+                                                                value="2" class="custom-control-input" [(ngModel)]="sel">
+                                                            <label class="custom-control-label"
+                                                                for="todos">todos</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+
+
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" formControlName="gender" id="activos"
+                                                                value="1" class="custom-control-input"  [(ngModel)]="sel" >
+                                                            <label class="custom-control-label"
+                                                                for="activos">Si asignados</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" formControlName="gender" id="bajas"
+                                                                value="0" class="custom-control-input" [(ngModel)]="sel">
+                                                            <label class="custom-control-label"
+                                                                for="bajas">No Asignados</label>
+                                                        </div>
+
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <br>
+                                            <table class="table " style="width: 350px;">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">LISTA DE PROCESOS</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngFor="let proces of procesos | filter:searchText1  | paginate: {  id: 'pagination2', itemsPerPage: 3, currentPage: page1 } ">
+                                                    <tr>
+                                                        <td scope="row">
+                                                            <input type="checkbox" id="vehicle1" name="ckel" value="{{proces.codp}}" (change)="onChange(proces.codp, $event.target.checked)" [checked]="checks">
+                                                        </td>
+                                                        <td colspan="2">{{proces.nombre}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <pagination-controls id="pagination2" (pageChange)="page1 = $event"></pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/card-block-->
+                        </div>
+                        <!-- /form card login -->
+                    </div>
+                </div>
+                <!--/row-->
+
+            </div>
+            <!--/col-->
+        </div>
+        <!--/row-->
+    </div>

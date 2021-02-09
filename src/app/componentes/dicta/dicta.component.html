@@ -1,0 +1,228 @@
+<div class="container ">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-md-12 mx-auto">
+                    <!-- form card login -->
+                    <div class="card rounded-2">
+                        <div class="card-header">
+                            <h3 class="mb-1">GESTION DOCENTES - GRUPOS</h3>
+                        </div>
+                        <div class="card-body-ml">
+
+                            <div class="container-xl">
+                                <a href="javascript:void(0)" (click)="llamaModalAddDicta(contentAdDicta)"
+                                    class="float-right icon-local_hospital " style="font-size:48px;"> </a>
+                                <br>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="textcenter col-sm-4">
+                                            Buscar::  <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="BUSCAR">
+                                        </div>
+                                        <div class="col-sm">
+                                            <label for="gestion">Gestion</label>
+                                            <select id="inputState" class="form-control" (change)="capturarGes($event.target.value)">
+                                                <option selected>Choose...</option>
+                                                <option *ngFor="let ges of gestionp" [value]="ges.value">{{ges.ges}}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br>
+                                <table class="table text-center">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">DOCENTES</th>
+                                            <th scope="col">GRUPO TALLER</th>
+                                            <th scope="col">GESTION</th>
+                                            <th scope="col">M</th>
+                                            <th scope="col">B</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let dic of dicta | filter:searchText | paginate: { itemsPerPage: 3, currentPage: page }">
+                                        <tr>
+                                            <td class="p-3">{{dic.nombre}}</td>
+                                            <td class="p-3">{{dic.grupo}}</td>
+                                            <td class="p-3">{{dic.gestion}}
+                                            </td>
+                                            <td class="p-3">
+                                                <a class="icon-pencil2 btn btn-secondary" href="javascript:void(0)"
+                                                    (click)="llamaModalModE(contentModdD,dic)">
+                                                </a>
+                                            </td>
+
+                                            <td class="p-3">
+                                                <a class="icon-delete btn btn-danger" href="javascript:void(0)"
+                                                    (click)="delete(dic)"></a>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                            </div>
+                        </div>
+                        <!--/card-block-->
+                    </div>
+                    <!-- /form card login -->
+                </div>
+            </div>
+            <!--/row-->
+
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->
+</div>
+<!--/container-->
+
+<ng-template #contentAdDicta let-c="close" let-d="dismiss" id="modal-add">
+    <div class="container ">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Asignacion Docentes-Grupos</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body ">
+                
+                <div class="form-group row mb-2 ">
+                    <label class="col-sm-4  col-form-label">Grupos</label>
+                    <div class="col">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <select class="form-control" formControlName="codg" [ngClass]="{'is-invalid': submitted &&  f.codg.errors }">
+                                    <option *ngFor="let grup of grupos" [ngValue]="grup.codg">
+                                      {{ grup.nombre }}
+                                    </option>
+                                  </select>
+                                  <div *ngIf="submitted && f.codg.errors" class="invalid-feedback">
+                                    <p *ngIf="f.codg.errors.required">requiere campo </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="form-group row mb-2 ">
+                    <label class="col-sm-4  col-form-label">Docentes</label>
+                    <div class="col">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <select class="form-control" formControlName="codp" [ngClass]="{'is-invalid': submitted &&  f.codp.errors }">
+                                    <option *ngFor="let per of personas" [ngValue]="per.codp">
+                                        {{ per.nombre }} {{per.ap}} {{per.am}}
+                                    </option>
+                                  </select>
+                                  <div *ngIf="submitted && f.codp.errors" class="invalid-feedback">
+                                    <p *ngIf="f.codp.errors.required">requiere campo </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="form-group row mb-2 ">
+                    <label class="col-sm-4  col-form-label">Gestion</label>
+                    <div class="col">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <select class="form-control" formControlName="gestion" [ngClass]="{'is-invalid': submitted &&  f.gestion.errors }">
+                                    <option *ngFor="let ges of gestionp" [ngValue]="ges.value">
+                                      {{ ges.ges }}
+                                    </option>
+                                  </select>
+                                  <div *ngIf="submitted && f.gestion.errors" class="invalid-feedback">
+                                    <p *ngIf="f.gestion.errors.required">requiere campo </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<!-- modificar -->
+<ng-template #contentModdD let-c="close" let-d="dismiss" id="modal-add">
+    <div class="container ">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Asignacion Docentes-Grupos</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form [formGroup]="registerForm2" (ngSubmit)="onSubmit2()">
+            <div class="modal-body ">
+                
+                <div class="form-group row mb-2 ">
+                    <label class="col-sm-4  col-form-label">Grupos</label>
+                    <div class="col">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <select class="form-control"  formControlName="codg" [ngClass]="{'is-invalid': submitted &&  f2.codg.errors }">
+                                    
+                                    <option *ngFor="let grup of grupos" [value]="grup.codg">
+                                      {{ grup.nombre }}
+                                    </option>
+                                  </select>
+                                  <div *ngIf="submitted && f2.codg.errors" class="invalid-feedback">
+                                    <p *ngIf="f2.codg.errors.required">requiere campo </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="form-group row mb-2 ">
+                    <label class="col-sm-4  col-form-label">Docentes</label>
+                    <div class="col">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <select class="form-control" formControlName="codp" [ngClass]="{'is-invalid': submitted &&  f2.codp.errors }">
+                                    <option *ngFor="let per of personas" [value]="per.codp">
+                                        {{ per.nombre }} {{per.ap}} {{per.am}}
+                                    </option>
+                                  </select>
+                                  <div *ngIf="submitted && f2.codp.errors" class="invalid-feedback">
+                                    <p *ngIf="f2.codp.errors.required">requiere campo </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="form-group row mb-2 ">
+                    <label class="col-sm-4  col-form-label">Gestion</label>
+                    <div class="col">
+                        <div class="col-xs-3">
+                            <div class="form-group">
+                                <select class="form-control" formControlName="gestion" [ngClass]="{'is-invalid': submitted &&  f2.gestion.errors }">
+                                    <option *ngFor="let ges of gestionp" [value]="ges.value" va>
+                                      {{ ges.ges }}
+                                    </option>
+                                  </select>
+                                  <div *ngIf="submitted && f2.gestion.errors" class="invalid-feedback">
+                                    <p *ngIf="f2.gestion.errors.required">requiere campo </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row text-center login-page">
+        <div class="col-md-12 login-form">
+            <form  method="POST"[formGroup]="loginform" (ngSubmit)="onsubmit()" >  
+                <div class="row">
+                    <div class="col-md-12 login-form-header">
+                        <p class="login-form-font-header">Iniciar sesion
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 login-from-row">
+                        <label for="usuario">Usuario::</label>
+                        <input name="usuario" type="text" placeholder="Usuario" formControlName="usuario"  [ngClass]="{'is-invalid': submitted &&  f.usuario.errors }" />
+
+                        <div *ngIf="submitted && f.usuario.errors" class="invalid-feedback">
+                            <p *ngIf="f.usuario.errors.required">requiere de Nombre del usuario</p>
+                            <p *ngIf="f.usuario.errors.minlength">Mínimo 3 char</p>
+                            <p *ngIf="f.usuario.errors.maxlength">Máximo 10 char</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 login-from-row">
+                        <label for="password">Password::</label>
+                        <input name="password" type="password" placeholder="password" formControlName="password" [ngClass]="{'is-invalid': submitted &&  f.password.errors }" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <p *ngIf="f.clave.password.required">requiere la clave del usuario</p>
+                            <p *ngIf="f.clave.password.minlength">Mínimo 5 char</p>
+                            <p *ngIf="f.clave.password.maxlength">Máximo 200 char</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 login-from-row">
+                        <button class="btn btn-info">Entrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="login">
+    <div class="form">
+      <h2>Welcome</h2>
+      <input type="text" placeholder="Username">
+      <input type="password" placeholder="Password">
+      <input type="submit" value="Sign In" class="submit">
+    </div>
+  </div> -->

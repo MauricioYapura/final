@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-sm  bg-dark navbar-dark pr-0" >
+  <div class="navbar-header">
+    <img src="assets/my3js32az.jpg" alt="" style="width: 100px; height: 40px; margin: 0px;">
+  </div>
+  <div class="container mr-0 ml-0 col-xl"  *ngIf="configService.nombreUsuario != 'Invitado'; else menuInvitado ">
+
+    <ul class="navbar-nav">
+      <div *ngFor="let menu of menus">
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDrop" data-toggle="dropdown">{{menu.nombre}}
+          </a>
+          <div *ngIf="menu.procesos.length >0">
+            <div class="dropdown-menu ">
+              <div *ngFor="let proc of menu.procesos">
+                <a class="dropdown-item" [routerLink]="['/', proc.enlace]">{{proc.nombre}}</a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+      </div>
+    </ul>
+    
+    <div class="form-inline" >
+      <label style="color: white;" for="sel1" >Roles:: </label>
+    <div class="form-group">
+        <select class="form-control" (change)="onRolesChange($event.target.value)">
+              <option [value]="0" selected>Seleecionar..</option>
+              <option *ngFor="let rol of roles" [value]="rol.codr">  
+                  {{rol.nombre}}
+              </option>
+        </select>   
+    </div>
+  </div>
+  </div>
+   <ng-template #menuInvitado>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Invitado</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Lista Trabajos de Tesis</a>
+                <a class="dropdown-item" href="#">Lista de Tribunales</a>
+            </div>
+      </li>
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Guardar</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Lista Trabajos de Tesis</a>
+            <a class="dropdown-item" href="#">Lista de Tribunales</a>
+          </div>
+      </li>
+   </ul>
+   </ng-template>
+   
+
+ 
+</nav>

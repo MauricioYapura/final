@@ -1,0 +1,26 @@
+
+<div class=" footer  fixed-bottom bg-dark text-white-50  row " >
+    <!-- -->
+      <div class=" pt-2 pl-4 col text-center" >
+        <p *ngIf="configService.nombreUsuario == 'Invitado'; else desconectar"> 
+          <a [routerLink]="['/login']" style="cursor: pointer;" >Conectar</a>
+         </p> 
+        <ng-template #desconectar>
+          <p >
+            <a  (click)="logout()" style="cursor: pointer;" >  Desconectar</a>
+          </p>
+        </ng-template> 
+        
+      </div>
+      <div class=" col text-center">
+        <p>© 2020 copyright: <span style="color: rgba(0, 119, 255, 0.678);"> Taller web</span> </p>
+     </div>
+
+     <div class=" pr-4 col text-center">
+      <a> Usuario: {{configService.nombreUsuario}}</a>  <p>{{date| date:'mediumDate'}}</p> 
+     </div>
+     
+        
+    
+  </div>
+
